@@ -7,36 +7,33 @@ syntax on
 set background=dark
 colorscheme torte
 
-set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim
-set laststatus=2
+""" Airline-related: """
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
 
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+set laststatus=2
+""" End of airline-related stuff """
+
+""" Forces the initial window size to be a little bit wider """
 if has("gui running")
   set lines=999 columns=999
 endif
-
-"set guifont=Liberation\ Mono\ Powerline\ 10
-"let g:Powerline_symbols = 'fancy'
-
-" Typical bool options:
-set ignorecase
-set smartcase
-set number
-set hlsearch
-set expandtab
-set autoindent
-set smartindent
-set wrap
-set autoread
-set ruler
-
-set noerrorbells
-set novisualbell
-
-set nobackup
-set nowb
-set noswapfile
-" End of bool options.
-
+""" End of initial window size control """
 
 " Various non-bool options:
 set history=512
@@ -46,8 +43,39 @@ set so=7
 set backspace=eol,start,indent
 set tabpagemax=50
 set colorcolumn=80
-highlight ColorColumn guibg=Black
+set matchtime=7
+" Expands tabs to spaces; keeps indent levels; aligns the braces together:
+set expandtab
+set autoindent
+set smartindent
+
+set number
+set wrap
+set ruler
+set noautoread
+set noerrorbells
+set novisualbell
+set nobackup
+set nowritebackup
+set noswapfile
+
+highlight ColorColumn ctermbg=DarkGray ctermfg=Blue
+                      \ guibg=DarkGray   guifg=Blue
+highlight Search cterm=underline ctermbg=NONE ctermfg=Yellow
+                 \ gui=underline   guibg=NONE   guifg=Yellow
+highlight MatchParen cterm=underline ctermbg=NONE ctermfg=Blue
+                     \ gui=underline   guibg=NONE   guifg=Blue
 " End of non-bool options.
+
+" Search options:
+"Makes search case-agnostic, unless capital letters are present in pattern string:
+set ignorecase
+set smartcase
+
+" Highlights the search results as they are typed in:
+set hlsearch
+set incsearch
+
 
 " Key mappings:
 let mapleader="\<Space>"
@@ -66,6 +94,10 @@ vnoremap <silent> p p`]
 nnoremap <silent> p p`]
 nnoremap Q <nop>
 map q: :q
+
+" Easier reindenting of a visual selection: reselects a block after indent/outdent
+vnoremap < <gv
+vnoremap > >gv
 
 "commands for quick .vimrc editing - <leader>ev and <leader>sv
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
@@ -98,7 +130,6 @@ iabbrev spam@ asz101.allegro@gmail.com
 
 " End of autoexpanding abbreviations.
 
-
 " Typo-s autofix:
 iabbrev improt import
 iabbrev sattic static
@@ -108,8 +139,16 @@ iabbrev publci public
 " End of typo-s autofixes.
 
 
+""" Autocommands: """
+" For any file type, jump to the position edited the last time:
+augroup vimrcEx
+  autocmd!
+  autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \ exe "normal g`\"" |
+    \ endif
+augroup END
 
-" Autocommands:
 augroup filetype_c
   autocmd!
   autocmd FileType c nnoremap <buffer> <localleader>c I//<space><esc>
@@ -124,6 +163,7 @@ augroup filetype_gitcommit
   autocmd!
   autocmd FileType gitcommit set cc=73
   autocmd FileType gitcommit set tw=72
+  autocmd FileType gitcommit nnoremap <buffer> <localleader>c I#<space><esc>
 augroup END
 
 augroup filetype_java
@@ -139,9 +179,12 @@ augroup END
 augroup filetype_python
   autocmd!
   autocmd FileType python nnoremap <buffer> <localleader>c I#<space><esc>
+  autocmd FileType python set shiftwidth=4
+  autocmd FileType python set softtabstop=4
 augroup END
-" End of Autocommands.
 
-
-" Stop that F1 key from interrupting workflow:
-nnoremap <F1> <nop>
+augroup filetype_sh
+  autocmd!
+  autocmd FileType sh nnoremap <buffer> <localleader>c I#<space><esc>
+augroup END
+""" End of Autocommands. """
