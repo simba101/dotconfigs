@@ -63,12 +63,16 @@ install ffmpeg
 install gimp
 install inkscape
 install mpd
+install ncmpcpp
 install vlc
 install youtube-dl
 
 # Installs the internet-related tools:
 printf "\nInstalling the network tools.\n"
 install thunderbird
+
+# Installs other tools:
+# don't install default-jdk
 
 # Informs the user that the installation has been completed successfully:
 printf "\n=== Finished installing the basic system ===\n"
