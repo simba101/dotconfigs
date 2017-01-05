@@ -64,6 +64,7 @@ install gimp
 install inkscape
 install mpd
 install ncmpcpp
+install mpc
 install vlc
 install youtube-dl
 
