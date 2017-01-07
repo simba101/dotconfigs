@@ -24,7 +24,7 @@ if [[ $EUID -ne 0 ]]; then
   printf "Aborting.\n"
   exit 2
 fi
-  
+
 # Exits gracefully if tar, gunzip or wget tool have not been installed:
 printf "Checking the environment...\n"
 check_tool tar
