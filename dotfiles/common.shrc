@@ -5,6 +5,15 @@
 # Adds the Scripts directory to the PATH variable:
 export PATH='/home/a.szczerbiak/Repos/csapi-tools':'/home/a.szczerbiak/Source/Scripts':$PATH
 
+function fPacsearch() {
+  if [[ $# -gt 0 ]]; then
+    apt-cache search $1 | grep $1
+  fi
+}
+
+# Disables the Ctrl-S/Ctrl-Q keystroke which mess up tmux:
+stty -ixon -ixoff
+
 # One-letter aliases:
 alias b='bc -l'
 alias e='echo'
@@ -42,14 +51,24 @@ alias fr='cat /dev/urandom | hexdump -C | grep --color=auto "ff ff ff"'
 alias fra='cat /dev/urandom | hexdump -C | grep --color=auto'
 alias cafe='cat /dev/urandom | hexdump -C | grep --color=auto "ca fe"'
 
+# Anki starter:
+alias Anki="python $HOME/Tools/Anki/runanki &"
+
 
 ######################### LOCAL-SPECIFIC CONFIGS FOLLOW ########################
 # Makes apt behave just like Pacman does ;)
 alias pacget='sudo apt-get install'
-alias pacsearch='apt-cache search'
+alias pacsearch='fPacsearch'
 alias pacupd='sudo apt-get update'
 alias pacupg='sudo apt-get upgrade'
-alias pacuupg='sudo apt-get update && sudo apt-get upgrade'
+
+function super_update() {
+  sudo apt-get update
+  sudo apt-get upgrade -y
+  sudo apt-get dist-upgrade -y
+  sudo apt-get autoremove -y
+}
+alias pacuupg='super_update'
 
 # Export useful IP addresses as global vars:
 export TV_L='106.120.57.216'

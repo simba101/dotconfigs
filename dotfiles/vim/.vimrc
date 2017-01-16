@@ -29,6 +29,26 @@ let g:airline_symbols.whitespace = 'Ξ'
 set laststatus=2
 """ End of airline-related stuff """
 
+
+""" Functions """
+" Switches between .h and .cc files:
+function! SwitchBetweenHeaderAndSourceFiles()
+  if (expand("%:e") == "cc")
+    find %:t:r.h
+  elseif (expand("%:e") == "h")
+    find %:t:r.cc
+  endif
+endfunction
+
+function! OpenComplementingHeaderOrSourceFile()
+  if expand("%:e") == "cc"
+    vsplit %:t:r.h
+  elseif expand("%:e") == "h"
+    vsplit %:t:r.cc
+  endif
+endfunction
+""" End of Functions. """
+
 """ Forces the initial window size to be a little bit wider """
 if has("gui running")
   set lines=999 columns=999
@@ -59,6 +79,10 @@ set nobackup
 set nowritebackup
 set noswapfile
 
+" Opens new splits to the right and to the bottom instead of Vim's default:
+set splitbelow
+set splitright
+
 highlight ColorColumn ctermbg=DarkGray ctermfg=Blue
                       \ guibg=DarkGray   guifg=Blue
 highlight Search cterm=underline ctermbg=NONE ctermfg=Yellow
@@ -75,6 +99,10 @@ set smartcase
 " Highlights the search results as they are typed in:
 set hlsearch
 set incsearch
+
+set listchars=tab:▸\ ,eol:¬
+highlight NonText guifg=#4a4a59 ctermfg=DarkGray
+highlight SpecialKey guifg=#4a4a59 ctermfg=DarkGray
 
 
 " Key mappings:
@@ -138,6 +166,9 @@ iabbrev vodi void
 iabbrev publci public
 " End of typo-s autofixes.
 
+""" C-indenting options: """
+setlocal cinoptions=N-s
+""" End of C-indenting options. """
 
 """ Autocommands: """
 " For any file type, jump to the position edited the last time:
@@ -157,6 +188,13 @@ augroup END
 augroup filetype_cpp
   autocmd!
   autocmd FileType cpp nnoremap <buffer> <localleader>c I//<space><esc>
+
+  " Maps F3 key to trigger toggling between source (.cc) and header (.h) files
+  " and F4 key to open complementing file in a vertical split:
+  nnoremap <F3> :call SwitchBetweenHeaderAndSourceFiles()<cr>
+  inoremap <F3> <esc>:call SwitchBetweenHeaderAndSourceFiles()<cr>
+  nnoremap <F4> :call OpenComplementingHeaderOrSourceFile()<cr>
+  inoremap <F4> <esc>:call OpenComplementingHeaderOrSourceFile()<cr>
 augroup END
 
 augroup filetype_gitcommit
@@ -188,3 +226,4 @@ augroup filetype_sh
   autocmd FileType sh nnoremap <buffer> <localleader>c I#<space><esc>
 augroup END
 """ End of Autocommands. """
+
