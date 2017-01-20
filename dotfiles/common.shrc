@@ -5,6 +5,9 @@
 # Adds the Scripts directory to the PATH variable:
 export PATH='/home/a.szczerbiak/Repos/csapi-tools':'/home/a.szczerbiak/Source/Scripts':$PATH
 
+# Sets the history to ignore and erase duplicated commands:
+export HISTCONTROL=ignoreboth:erasedups
+
 function fPacsearch() {
   if [[ $# -gt 0 ]]; then
     apt-cache search $1 | grep $1

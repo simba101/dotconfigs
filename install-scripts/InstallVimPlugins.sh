@@ -49,7 +49,7 @@ fi
 
 # Finally copies the .vimrc file to the HOME directory:
 printf "%s\n" "-> Updating the .vimrc file..."
-if [ -f ../.vimrc ]; then
+if [ -f ../dotfiles/vimrc ]; then
   cp ../.vimrc $HOME
   printf "%s\n" "...updated the .vimrc file"
 else
