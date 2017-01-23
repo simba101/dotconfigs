@@ -17,6 +17,13 @@ function fPacsearch() {
 # Disables the Ctrl-S/Ctrl-Q keystroke which mess up tmux:
 stty -ixon -ixoff
 
+# Creates a directory and immediately enters into it:
+function Mkdir()
+{
+  mkdir -p -- "$1"
+  cd -P -- "$1"
+}
+
 # One-letter aliases:
 alias b='bc -l'
 alias e='echo'

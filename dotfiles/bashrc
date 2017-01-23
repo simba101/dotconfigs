@@ -26,7 +26,49 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+function make_bash_prompt()
+{
+  local EXITCODE="$?"                 # This needs to be first.
+
+  local colorNONE="\[\033[0m\]"       # resets color to terminal's FG color.
+  local colorK="\[\033[0;30m\]"       # regular black
+  local colorR="\[\033[0;31m\]"       # regular red
+  local colorG="\[\033[0;32m\]"       # regular green
+  local colorY="\[\033[0;33m\]"       # regular yellow
+  local colorB="\[\033[0;34m\]"       # regular blue
+  local colorM="\[\033[0;35m\]"       # regular magenta
+  local colorC="\[\033[0;36m\]"       # regular cyan
+  local colorW="\[\033[0;37m\]"       # regular white
+  local colorKEM="\[\033[1;30m\]"     # bold black
+  local colorREM="\[\033[1;31m\]"     # bold red
+  local colorGEM="\[\033[1;32m\]"     # bold green
+  local colorYEM="\[\033[1;33m\]"     # bold yellow
+  local colorBEM="\[\033[1;34m\]"     # bold blue
+  local colorMEM="\[\033[1;35m\]"     # bold magenta
+  local colorCEM="\[\033[1;36m\]"     # bold cyan
+  local colorWEM="\[\033[1;37m\]"     # bold white
+  local bgcolorK="\[\033[40m\]"       # background black
+  local bgcolorR="\[\033[41m\]"       # background red
+  local bgcolorG="\[\033[42m\]"       # background green
+  local bgcolorY="\[\033[43m\]"       # background yellow
+  local bgcolorB="\[\033[44m\]"       # background blue
+  local bgcolorM="\[\033[45m\]"       # background magenta
+  local bgcolorC="\[\033[46m\]"       # background cyan
+  local bgcolorW="\[\033[47m\]"       # background white
+
+  local usercolor=$colorG    # normal user's color - green.
+  if [ $UID -eq "0" ]; then
+    usercolor=$colorR        # superuser's color - red.
+  fi
+  local exitcolor=$colorG    # normal exit color - green.
+  if [ "$EXITCODE" -ne "0" ]; then
+    exitcolor="$colorY"      # abnormal exit color - yellow.
+  fi
+  PS1="${colorNONE}[${exitcolor}$EXITCODE${colorNONE}] [${colorM}\t${colorNONE}] ${usercolor}\u${colorNONE} in ${colorB}\w ${usercolor}\n\$${colorNONE} "
+}
+
+PROMPT_COMMAND=make_bash_prompt
+
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
