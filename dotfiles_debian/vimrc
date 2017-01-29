@@ -100,7 +100,7 @@ set smartcase
 set hlsearch
 set incsearch
 
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:▸\ 
 highlight NonText guifg=#4a4a59 ctermfg=DarkGray
 highlight SpecialKey guifg=#4a4a59 ctermfg=DarkGray
 
@@ -150,11 +150,11 @@ map! ^N ^[a. ^[hbmmi/\<^[2h"zdt.@z^Mywmx`mP xi
 
 
 " Abbreviations autoexpanding into useful info:
-iabbrev @@ a.szczerbiak@samsung.com
-iabbrev (@@ Adam Szczerbiak (a.szczerbiak@samsung.com)
-iabbrev @@@ szczerbiakadam@gmail.com
-iabbrev (@@@ Adam Szczerbiak (szczerbiakadam@gmail.com)
+iabbrev @@ szczerbiakadam@gmail.com
+iabbrev (@@ Adam Szczerbiak (szczerbiakadam@gmail.com)
 iabbrev spam@ asz101.allegro@gmail.com
+iabbrev @spam@ asz101.allegro@gmail.com
+
 
 " End of autoexpanding abbreviations.
 
@@ -226,4 +226,3 @@ augroup filetype_sh
   autocmd FileType sh nnoremap <buffer> <localleader>c I#<space><esc>
 augroup END
 """ End of Autocommands. """
-

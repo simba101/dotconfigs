@@ -1,0 +1,78 @@
+# This file contains exports, functions and aliases to be sourced
+# for all the shells.
+# Author: simba (szczerbiakadam@gmail.com)
+
+# Adds the Scripts directory to the PATH variable:
+export PATH='/home/simba/Source/Scripts':$PATH
+
+# Sets the history to ignore and erase duplicated commands:
+export HISTCONTROL=ignoreboth:erasedups
+
+# Disables the Ctrl-S/Ctrl-Q keystroke which mess up tmux:
+stty -ixon -ixoff
+
+# Creates a directory and immediately enters into it:
+function Mkdir()
+{
+  mkdir -p -- "$1"
+  cd -P -- "$1"
+}
+
+# One-letter aliases:
+alias b='bc -l'
+alias e='echo'
+alias p='printf "%s\n"'
+alias k='kill -9'
+alias q='exit'
+
+# Aliases for typo auto-corrections:
+alias tmux='TERM=xterm-256color tmux -2'
+
+# Forces color support of ls and various grep flavors:
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias ls='ls --color=auto'
+
+# Git Amend Date
+alias gad='GIT_COMMITER_DATE="`date`" git commit --amend --date="`date`"'
+
+# Useful ls aliases:
+alias la='ls -A'
+alias ll='ls -alF'
+alias lss='ls -Al'
+
+# Enables easy cd'ing:
+alias cd..='cd ..'                        #  A typo autocorrection
+alias ..='cd ..'
+alias ....='cd ../..'                     #  4 dots - cd ../..
+alias ......='cd ../../..'                #  6 dots - cd ../../..
+alias ........='cd ../../../..'           #  8 dots - cd ../../../..
+alias ..........='cd ../../../../..'      # 10 dots - cd ../../../../..
+
+# Jokes on you: Find in Random
+alias fr='cat /dev/urandom | hexdump -C | grep --color=auto "ff ff ff"'
+alias fra='cat /dev/urandom | hexdump -C | grep --color=auto'
+alias cafe='cat /dev/urandom | hexdump -C | grep --color=auto "ca fe"'
+
+# Quick Anki invoking:
+alias Anki="python $HOME/Tools/anki-2.0.39/runanki &"
+
+
+######################### LOCAL-SPECIFIC CONFIGS FOLLOW ########################
+# Easy control over Aptitude:
+function fPacsearch() {
+  if [[ $# -gt 0 ]]; then
+    aptitude search $1 | grep $1
+  fi
+}
+function fUpdatePackages() {
+  sudo aptitude update
+  sudo aptitude safe-upgrade
+}
+
+alias pacsearch='fPacsearch'
+alias pacget='sudo aptitude install'
+alias pacrm='sudo aptitude remove'
+alias pacupg='fUpdatePackages'
+# End of Aptitude setup.
