@@ -1,5 +1,4 @@
 # include .bashrc if it exists
-export HISTTIMEFORMAT="%Y-%m-%d %T "
 if [ -f "$HOME/.bashrc" ]; then
 	. "$HOME/.bashrc"
 fi

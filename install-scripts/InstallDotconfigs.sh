@@ -7,13 +7,48 @@ SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd )"
 # Extracts the full name of the root directory of this repo:
 ROOT_DIR="$(dirname "$SCRIPTS_DIR")"
 
-# Extracts the full name of the directory containing the dotfiles:
-DOTFILES_DIR="$ROOT_DIR/dotfiles"
-# printf "%s\n%s\n%s\n" "$SCRIPTS_DIR" "$ROOT_DIR" "$DOTFILES_DIR"
+# Contains the full name of the directory containing the common dotfiles,
+# which should be the same across every machine I use:
+COMMON_DOTFILES_DIR="$ROOT_DIR/dotfiles_COMMON"
+
+# Contains the full name of the directory containing the localized dotfiles,
+# which will be filled later by calling the select_dotfiles_src function:
+DOTFILES_DIR=""
 ### END OF AUTO-CONFIG SECTION.
 
 
 ###############################################################################
+# select_dotfiles_src() method
+# sets the global variable $DOTFILES_DIR according to the user's preferences.
+function select_dotfiles_src()
+{
+  local AVAILABLE_DOTFILES=("dotfiles_debian" "dotfiles_work")
+  printf "Please select the dotfiles source. The following are available:\n"
+  PS3="Your choice: "
+  local ANS=""
+  select ANS in "${AVAILABLE_DOTFILES[@]}"; do
+    case "$ANS" in
+      # If the user chooses the debian dotfiles:
+      "${AVAILABLE_DOTFILES[0]}")
+        DOTFILES_DIR="$ROOT_DIR/${AVAILABLE_DOTFILES[0]}"
+        printf "Debian dotfiles have been selected.\n"
+        break
+      ;;
+
+      # If the user chooses the workplace dotfiles:
+      "${AVAILABLE_DOTFILES[1]}")
+        DOTFILES_DIR="$ROOT_DIR/${AVAILABLE_DOTFILES[1]}"
+        printf "Workplace dotfiles have been selected.\n"
+        break
+      ;;
+
+      *)
+        printf "Incorrect dotfiles source.\n"
+      ;;
+    esac
+  done
+}
+
 # install_config() method
 # invoke with: install_config repo_file target_file
 function install_config() {
@@ -116,10 +151,13 @@ function install_config() {
 # End of install_config() method's definition.
 ###############################################################################
 
+# Queries the user for the source from which dotfiles should be installed:
+select_dotfiles_src
+
 # Installs the shell-related configs:
 install_config "$DOTFILES_DIR/common.shrc" "$HOME/.config/common.shrc"
 install_config "$DOTFILES_DIR/bashrc" "$HOME/.bashrc"
-install_config "$DOTFILES_DIR/bash_profile" "$HOME/.bash_profile"
+install_config "$COMMON_DOTFILES_DIR/bash_profile" "$HOME/.bash_profile"
 install_config "$DOTFILES_DIR/gitconfig" "$HOME/.gitconfig"
 install_config "$DOTFILES_DIR/vimrc" "$HOME/.vimrc"
-install_config "$DOTFILES_DIR/Xresources" "$HOME/.Xresources"
+install_config "$COMMON_DOTFILES_DIR/Xresources" "$HOME/.Xresources"
