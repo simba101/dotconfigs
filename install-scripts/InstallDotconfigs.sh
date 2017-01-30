@@ -119,6 +119,7 @@ function install_config() {
 # Installs the shell-related configs:
 install_config "$DOTFILES_DIR/common.shrc" "$HOME/.config/common.shrc"
 install_config "$DOTFILES_DIR/bashrc" "$HOME/.bashrc"
+install_config "$DOTFILES_DIR/bash_profile" "$HOME/.bash_profile"
 install_config "$DOTFILES_DIR/gitconfig" "$HOME/.gitconfig"
 install_config "$DOTFILES_DIR/vimrc" "$HOME/.vimrc"
 install_config "$DOTFILES_DIR/Xresources" "$HOME/.Xresources"

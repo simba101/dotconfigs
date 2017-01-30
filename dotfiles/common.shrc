@@ -40,13 +40,31 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias ls='ls --color=auto'
 
-# Git Amend Date
-alias gad='GIT_COMMITER_DATE="`date`" git commit --amend --date="`date`"'
-
 # Useful ls aliases:
 alias la='ls -A'
 alias ll='ls -alF'
 alias lss='ls -Al'
+
+# Easier $PATH echoing:
+alias path='echo -e ${PATH//:/\\n}'
+
+# Easy time and date:
+alias now='date +"%T"'
+alias nowtime=now
+alias nowdate='date +"%d-%m-%Y"'
+
+# Better & faster ping tool:
+alias Ping='ping -c 10 -i.2'
+
+# Git Amend Date
+alias gad='GIT_COMMITER_DATE="`date`" git commit --amend --date="`date`"'
+
+# Fixes the --include-all option for gbs:
+function gbsb()
+{
+  echo "[sudo gbs build --include-all]"
+  sudo gbs build --include-all
+}
 
 # Enables easy cd'ing:
 alias cd..='cd ..'                        #  A typo autocorrection
