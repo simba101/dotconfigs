@@ -155,9 +155,13 @@ function install_config() {
 select_dotfiles_src
 
 # Installs the shell-related configs:
+install_config "$COMMON_DOTFILES_DIR/Xresources" "$HOME/.Xresources"
 install_config "$DOTFILES_DIR/common.shrc" "$HOME/.config/common.shrc"
 install_config "$DOTFILES_DIR/bashrc" "$HOME/.bashrc"
 install_config "$COMMON_DOTFILES_DIR/bash_profile" "$HOME/.bash_profile"
 install_config "$DOTFILES_DIR/gitconfig" "$HOME/.gitconfig"
-install_config "$DOTFILES_DIR/vimrc" "$HOME/.vimrc"
-install_config "$COMMON_DOTFILES_DIR/Xresources" "$HOME/.Xresources"
+install_config "$COMMON_DOTFILES_DIR/vimrc" "$HOME/.vimrc"
+mkdir -p "$HOME/.config/vim"
+install_config "$DOTFILES_DIR/machine_specific.vimrc" \
+    "$HOME/.config/vim/machine_specific.vimrc"
+

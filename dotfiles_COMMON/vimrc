@@ -12,18 +12,12 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
-" unicode symbols
-let g:airline_left_sep = '»'
+" unicode symbols for the powerline glyphs:
 let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
 let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
 let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
 let g:airline_symbols.branch = '⎇'
 let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
 let g:airline_symbols.whitespace = 'Ξ'
 
 set laststatus=2
@@ -59,7 +53,7 @@ endif
 set history=512
 set tabstop=2
 set shiftwidth=2
-set so=7
+set scrolloff=7
 set backspace=eol,start,indent
 set tabpagemax=50
 set colorcolumn=80
@@ -134,6 +128,15 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 "commands for surrounding a word with various characters
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
+nnoremap <leader>* viw<esc>a*<esc>hbi*<esc>lel
+nnoremap <leader>% viw<esc>a%<esc>hbi%<esc>lel
+nnoremap <leader>^ viw<esc>a$<esc>hbi^<esc>lel
+nnoremap <leader>( viw<esc>a)<esc>hbi(<esc>lel
+nnoremap <leader>) viw<esc>a)<esc>hbi(<esc>lel
+nnoremap <leader>[ viw<esc>a]<esc>hbi[<esc>lel
+nnoremap <leader>] viw<esc>a]<esc>hbi[<esc>lel
+nnoremap <leader>{ viw<esc>a}<esc>hbi{<esc>lel
+nnoremap <leader>} viw<esc>a}<esc>hbi{<esc>lel
 
 " Switch off search highlight temporarily:
 nnoremap <silent> <Leader>/ :nohlsearch<cr>
@@ -148,22 +151,13 @@ vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 map! ^P ^[a. ^[hbmmi?\<^[2h"zdt.@z^Mywmx`mP xi
 map! ^N ^[a. ^[hbmmi/\<^[2h"zdt.@z^Mywmx`mP xi
 
-
-" Abbreviations autoexpanding into useful info:
-iabbrev @@ a.szczerbiak@samsung.com
-iabbrev (@@ Adam Szczerbiak (a.szczerbiak@samsung.com)
-iabbrev @@@ szczerbiakadam@gmail.com
-iabbrev (@@@ Adam Szczerbiak (szczerbiakadam@gmail.com)
-iabbrev spam@ asz101.allegro@gmail.com
-
-" End of autoexpanding abbreviations.
-
 " Typo-s autofix:
 iabbrev improt import
 iabbrev sattic static
 iabbrev mani main
 iabbrev vodi void
 iabbrev publci public
+iabbrev teh the
 " End of typo-s autofixes.
 
 """ C-indenting options: """
@@ -212,6 +206,7 @@ augroup END
 augroup filetype_make
   autocmd!
   autocmd FileType make setlocal noexpandtab
+  autocmd FileType make nnoremap <buffer> <localleader>c I#<space><esc>
 augroup END
 
 augroup filetype_python
@@ -227,3 +222,5 @@ augroup filetype_sh
 augroup END
 """ End of Autocommands. """
 
+""" Sources the abbreviations expanding to the personal e-mail addresses:
+source $HOME/.config/vim/machine_specific.vimrc
