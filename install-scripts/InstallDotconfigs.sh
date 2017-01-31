@@ -86,7 +86,7 @@ function install_config() {
   if [ ! -f "$TARGET" ]; then
     printf "Copying $FILENAME to $TARGET_PARENT_DIR..."
     cp "$SOURCE" "$TARGET" >/dev/null 2>&1
-    if [ $? -ne 0]; then
+    if [ $? -ne 0 ]; then
       printf " failed.\n"
       printf "[WARNING] The file has not been copied properly!\n"
     else
