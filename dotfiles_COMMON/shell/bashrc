@@ -66,31 +66,24 @@ function make_bash_prompt()
 
 PROMPT_COMMAND=make_bash_prompt
 
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-if [ -f ~/.config/common.shrc ]; then
-    . ~/.config/common.shrc
+# Sources the common shell aliases:
+if [ -f ~/.config/shrc/common.shrc ]; then
+    . ~/.config/shrc/common.shrc
 fi
+
+# Sources the aliases for easier control of the package manager:
+if [ -f ~/.config/shrc/package_manager.shrc ]; then
+  . ~/.config/shrc/package_manager.shrc
+fi
+
+# Sources the machine-specific aliases:
+if [ -f ~/.config/shrc/machine_specific.shrc ]; then
+  . ~/.config/shrc/machine_specific.shrc
+fi
+
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile

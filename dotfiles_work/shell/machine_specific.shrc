@@ -1,0 +1,11 @@
+# easy SDB shell access for both root and developer accounts:
+alias sdbd='sdb root off && sdb shell'
+alias sdbr='sdb root on && sdb shell'
+alias sdbc='sdb connect'
+alias sdbdc='sdb disconnect'
+alias sdbk='sdb disconnect'                 # "sdb kill"
+
+alias tizen_debug_console="google-chrome --no-first-run --activate-on-launch --no-default-browser-check --allow-file-access-from-files --disable-web-security --disable-translate --proxy-auto-detect --proxy-bypass-list=127.0.0.1 --app=http://106.116.153.86:7011/inspector.html?page=1"
+
+# Anki starter:
+alias Anki="python $HOME/Tools/Anki/runanki &"

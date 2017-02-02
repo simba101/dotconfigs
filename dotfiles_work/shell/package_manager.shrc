@@ -1,0 +1,23 @@
+# Contains aliases allowing easier control of the package-manager.
+# Author: simba (szczerbiakadam@gmail.com)
+
+# Config for the machine used at work, package manager is apt-get
+
+function fPacsearch() {
+  if [[ $# -gt 0 ]]; then
+    apt-cache search $1 | grep $1
+  fi
+}
+
+alias pacget='sudo apt-get install'
+alias pacsearch='fPacsearch'
+alias pacupd='sudo apt-get update'
+alias pacupg='sudo apt-get upgrade'
+
+function super_update() {
+  sudo apt-get update
+  sudo apt-get upgrade -y
+  sudo apt-get dist-upgrade -y
+  sudo apt-get autoremove -y
+}
+alias pacuupg='super_update'

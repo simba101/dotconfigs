@@ -73,7 +73,7 @@ function install_config() {
   # it will be created now:
   if [ ! -d "$TARGET_PARENT_DIR" ]; then
     printf "Creating the directory: %s\n" "$TARGET_PARENT_DIR"
-    mkdir -p TARGET_PARENT_DIR
+    mkdir -p $TARGET_PARENT_DIR
   fi
 
   # Terminates the function if source file is missing:
@@ -86,7 +86,7 @@ function install_config() {
   if [ ! -f "$TARGET" ]; then
     printf "Copying $FILENAME to $TARGET_PARENT_DIR..."
     cp "$SOURCE" "$TARGET" >/dev/null 2>&1
-    if [ $? -ne 0]; then
+    if [ $? -ne 0 ]; then
       printf " failed.\n"
       printf "[WARNING] The file has not been copied properly!\n"
     else
@@ -156,12 +156,17 @@ select_dotfiles_src
 
 # Installs the shell-related configs:
 install_config "$COMMON_DOTFILES_DIR/Xresources" "$HOME/.Xresources"
-install_config "$DOTFILES_DIR/common.shrc" "$HOME/.config/common.shrc"
-install_config "$DOTFILES_DIR/bashrc" "$HOME/.bashrc"
-install_config "$COMMON_DOTFILES_DIR/bash_profile" "$HOME/.bash_profile"
+install_config "$COMMON_DOTFILES_DIR/shell/common.shrc" \
+               "$HOME/.config/shrc/common.shrc"
+install_config "$DOTFILES_DIR/shell/machine_specific.shrc" \
+               "$HOME/.config/shrc/machine_specific.shrc"
+install_config "$DOTFILES_DIR/shell/package_manager.shrc" \
+               "$HOME/.config/shrc/package_manager.shrc"
+install_config "$COMMON_DOTFILES_DIR/shell/bashrc" "$HOME/.bashrc"
+install_config "$COMMON_DOTFILES_DIR/shell/bash_profile" "$HOME/.bash_profile"
+
 install_config "$DOTFILES_DIR/gitconfig" "$HOME/.gitconfig"
 install_config "$COMMON_DOTFILES_DIR/vimrc" "$HOME/.vimrc"
-mkdir -p "$HOME/.config/vim"
 install_config "$DOTFILES_DIR/machine_specific.vimrc" \
     "$HOME/.config/vim/machine_specific.vimrc"
 
