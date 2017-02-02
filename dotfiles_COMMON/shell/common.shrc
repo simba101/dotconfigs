@@ -2,12 +2,6 @@
 # for all the shells.
 # Author: simba (szczerbiakadam@gmail.com)
 
-# Adds the Scripts directory to the PATH variable:
-export PATH='/home/a.szczerbiak/Repos/csapi-tools':'/home/a.szczerbiak/Source/Scripts':$PATH
-
-# Sets the history to ignore and erase duplicated commands:
-export HISTCONTROL=ignoreboth:erasedups
-
 # Disables the Ctrl-S/Ctrl-Q keystroke which mess up tmux:
 stty -ixon -ixoff
 
@@ -29,7 +23,7 @@ alias q='exit'
 alias k9='kill -9'
 alias ka='killall'
 
-# Aliases for typo auto-corrections:
+# Fixes tmux on exotic terminals:
 alias tmux='TERM=xterm-256color tmux -2'
 
 # Forces color support of ls and various grep flavors:
@@ -56,13 +50,6 @@ alias Ping='ping -c 10 -i.2'
 
 # Git Amend Date
 alias gad='GIT_COMMITER_DATE="`date`" git commit --amend --date="`date`"'
-
-# Fixes the --include-all option for gbs:
-function gbsb()
-{
-  echo "[sudo gbs build --include-all]"
-  sudo gbs build --include-all
-}
 
 # Enables easy cd'ing:
 alias cd..='cd ..'                        #  A typo autocorrection
