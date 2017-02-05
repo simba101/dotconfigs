@@ -12,6 +12,16 @@ function Mkdir()
   cd -P -- "$1"
 }
 
+# Sudoes the passed command (by default sudoes the last command):
+function s()
+{
+  if [[ $# -eq 0 ]]; then
+    sudo $(history -p '!!')
+  else
+    sudo "$@"
+  fi
+}
+
 # One-letter aliases:
 alias b='bc -l'
 alias e='echo'
@@ -34,8 +44,11 @@ alias ls='ls --color=auto'
 
 # Useful ls aliases:
 alias la='ls -A'
-alias ll='ls -alF'
+alias ll='ls -AlF'
 alias lss='ls -Al'
+alias l='ls -CF'
+alias lt='ls -alptr' # shows results sorted by time, oldest first.
+alias labc='ls -lap' # shows results sorted alphabetically (ascending order).
 
 # Easier $PATH echoing:
 alias Path='echo -e ${PATH//:/\\n}'
@@ -62,4 +75,37 @@ alias ..........='cd ../../../../..'      # 10 dots - cd ../../../../..
 # Jokes on you: Find in Random
 alias fr='cat /dev/urandom | hexdump -C | grep --color=auto "ff ff ff"'
 alias fra='cat /dev/urandom | hexdump -C | grep --color=auto'
-alias cafe='cat /dev/urandom | hexdump -C | grep --color=auto "ca fe"'
+alias cafe='cat /dev/urandom | hexdump -C | grep --color=auto "ca fe" | lolcat -a'
+
+# Extracts archives easily:
+function Extract()
+{
+  if [ -f "$1" ]; then
+    case "$1" in
+      *.tar.bs2)      tar xjvf "$1"    ;;
+      *.tar.gz)       tar xzvf "$1"    ;;
+      *.bz2)          bunzip2 "$1"     ;;
+      *.rar)          unrar "$1"       ;;
+      *.gz)           gunzip "$1"      ;;
+      *.tar)          tar xvf "$1"     ;;
+      *.tbz2)         tar xjvf "$1"    ;;
+      *.tgz)          tar xzvf "$1"    ;;
+      *.zip)          unzip "$1"       ;;
+      *.Z)            uncompress "$1"  ;;
+      *.7z)           7z x $1          ;;
+      *)              printf "Unrecognized format: %s\n" "$1" ;;
+    esac
+  else
+    printf "%s is not a valid file." "$1"
+  fi
+}
+
+# Check the weather for a selected town in a console:
+function Weather()
+{
+  local TOWN="warsaw"
+  if [[ $# -ne 0 ]]; then
+    TOWN=$@
+  fi
+  curl wttr.in/"$TOWN"
+}
