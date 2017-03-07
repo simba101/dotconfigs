@@ -47,6 +47,15 @@ else
   printf "%s\n" "...done."
 fi
 
+# Downloads and installs the UltiSnips plugin:
+printf "%s\n" "-> Installing vim-better-whitespace..."
+if [ -d "$HOME/.vim/bundle/ultisnips" ]; then
+  printf "...already installed.\n"
+else
+  git clone https://github.com/SirVer/ultisnips.git ~/.vim/bundle/ultisnips
+  printf "...done.\n"
+fi
+
 # Finally copies the .vimrc file to the HOME directory:
 printf "%s\n" "-> Updating the .vimrc file..."
 if [ -f ../dotfiles/vimrc ]; then
