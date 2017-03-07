@@ -11,6 +11,8 @@
   co = checkout
   cob = checkout -b
   cp = cherry-pick
+  d = diff
+  dc = diff --cached
   pullff = pull --ff-only
   prb = pull --rebase
   s = status -s

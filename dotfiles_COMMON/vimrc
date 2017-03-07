@@ -23,6 +23,18 @@ let g:airline_symbols.whitespace = 'Ξ'
 set laststatus=2
 """ End of airline-related stuff """
 
+""" Ultisnips-related: """
+let g:UltiSnipsSnippetsDir="~/.vim/UltiSnips"
+
+let g:UltiSnipsExpandTrigger="<c-e>"
+
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+" Makes :UltiSnipsEdit open a new split instead of switching buffers:
+let g:UltiSnipsEditSplit="vertical"
+""" End of Ultisnips-related stuff """
+
 
 """ Functions """
 " Switches between .h and .cc files:
@@ -172,6 +184,18 @@ augroup vimrcEx
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \ exe "normal g`\"" |
     \ endif
+augroup END
+
+" For any file type, updates the timestamps:
+function! UpdateTimestamp()
+  try
+    %s/^\(#\|\/\/\) Last [Mm]odified: \zs.*/\=strftime('%d-%m-%Y')
+  catch
+  endtry
+endfunction
+augroup timestamps
+  autocmd!
+  autocmd BufWritePre * call UpdateTimestamp()
 augroup END
 
 augroup filetype_c
